@@ -22,8 +22,8 @@ public class CursoService {
         this.alunoRepository = alunoRepository;
     }
 
-    @Autowired
-    private Aluno aluno;
+   // @Autowired
+    //private Aluno aluno;
 
 
     public void matricula(Long cursoId, Long alunoid) {

@@ -3,12 +3,13 @@ package com.projeto.confeitart.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_curso")
-public class Curso {
+public class Curso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,8 +20,16 @@ public class Curso {
     private Professor professor;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "aluno")
-    private  List<Aluno> alunos;
+    @ManyToMany(mappedBy = "cursos")
+    private List<Aluno> alunos;
+
+   // @JsonIgnore
+    //@ManyToOne
+    //@JoinColumn(name = "aluno_id")
+    //private Aluno aluno;
+
+
+
 
     //private List<Categoria> categorias;
     //private List<Modulo>modulos;

@@ -10,26 +10,31 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_aluno")
+//@Table(name = "tb_aluno")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tb_aluno", discriminatorType = DiscriminatorType.STRING)
 public class Aluno extends Usuario implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //private Plano plano;
-    private Curso cursos;
+    private Curso curso;
+
 
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "matricula",
             joinColumns = @JoinColumn(name = "aluno_id"),
             inverseJoinColumns = @JoinColumn(name = "curso_id")
     )
-    private Curso curso;
+    private List<Curso> cursos;
+
     public Aluno(){}
 
     public Aluno(Long id) {
@@ -51,12 +56,12 @@ this.curso = curso;
         this.id = id;
     }
 
-    public Curso getCursos() {
-        return cursos;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setCursos(Curso cursos) {
-        this.cursos = cursos;
+    public void setCursos(Curso curso) {
+        this.curso = curso;
     }
 
 

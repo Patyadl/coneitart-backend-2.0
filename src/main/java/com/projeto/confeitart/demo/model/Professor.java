@@ -4,16 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_professor")
+//@Table(name = "tb_professor")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tb_professor", discriminatorType = DiscriminatorType.STRING)
 public class Professor extends Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String especializacao;
-    //List<Curso> curso
+
+    @OneToMany(mappedBy = "professor")
+    private List<Curso> cursos;
+
+
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "usuario_id")
