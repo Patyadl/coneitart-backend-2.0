@@ -2,7 +2,6 @@ package com.projeto.confeitart.demo.services;
 
 
 import com.projeto.confeitart.demo.model.Aluno;
-import com.projeto.confeitart.demo.model.Curso;
 import com.projeto.confeitart.demo.repositories.AlunoRepository;
 import com.projeto.confeitart.demo.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

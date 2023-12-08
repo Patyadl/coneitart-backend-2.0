@@ -40,36 +40,31 @@ public class TestConfig implements CommandLineRunner {
 
         //Professor p1 = new Professor(2L, "Iago Rodrigues", "iago@gmail.com", 2345, "Doces");
         Professor p1 = new Professor();
-        p1.setNome("Iago Rodrigues");
-        p1.setEmail("iago@gmail.com");
-        p1.setSenha(2345);
-        p1.setEspecializacao("Doces");
+        p1.setNome("Fernanda Fortunato");
+        p1.setEmail("fernanda@gmail.com");
+        p1.setSenha(2785);
+        p1.setEspecializacao("confeitaria clássica");
 
         professorRepository.save(p1);
 
         Curso curso = new Curso();
         curso.setNome("Confeitaria Básica");
-        curso.setDescricao("Curso sobre conceitos básicos");
+        curso.setDescricao("Curso sobre confeitaria da frança");
 
-        // Salvar o curso no banco de dados
+      
         cursoService.adicionarCurso(curso);
 
 
-        //Curso curso1 = new Curso(5L, "Confeitaria Básica", "curso sobre conceitos básicos", p1);
-
         Aluno aluno = new Aluno();
+        aluno.setNome("caio");
+        aluno.setEmail("caio@gmail.com");
+        aluno.setSenha(1238);
 
-        aluno.setNome("Maria");
-        aluno.setEmail("maria@gmail.com");
-        aluno.setSenha(1234);
 
-        //Aluno a1 = new Aluno(1L, "Maria", "maria@gmail.com", 1234, 5L);
-       // professorRepository.saveAll(Arrays.asList(p1));
+
         cursoService.matricula(curso.getId() , aluno);
+        alunoRepository.save(aluno);
 
-        //p1.setCurso(curso1);
-
-        //alunoRepository.saveAll(Arrays.asList(a1);
 
 
     }
