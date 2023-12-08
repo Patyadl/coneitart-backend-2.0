@@ -6,20 +6,18 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "tb_aluno")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tb_aluno", discriminatorType = DiscriminatorType.STRING)
 public class Aluno extends Usuario implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //private Plano plano;
-    private Curso curso;
+    //private Curso curso;
 
 
     @JsonIgnore
@@ -27,12 +25,10 @@ public class Aluno extends Usuario implements Serializable  {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "matricula",
+    @JoinTable(name = "aluno_curso",
             joinColumns = @JoinColumn(name = "aluno_id"),
-            inverseJoinColumns = @JoinColumn(name = "curso_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "curso_id"))
     private List<Curso> cursos;
 
     public Aluno(){}
@@ -42,29 +38,37 @@ public class Aluno extends Usuario implements Serializable  {
 
     }
 
-    public Aluno(Long id, String nome, String email, int senha,Curso curso) {
+    public Aluno(Long id, String nome, String email, int senha, Long id_curso) {
         super(id, nome, email, senha);
-this.curso = curso;
+
+        // Agora, o ID do curso deve ser atribuído ao curso diretamente, não ao ID do aluno
+        this.cursos = new ArrayList<>();
+        if (id_curso != null) {
+            Curso curso = new Curso();
+            curso.setId(id_curso);
+            this.cursos.add(curso);
+        }
     }
 
 
+
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public List<Curso> getCursos() {
+        return cursos;
     }
 
-    public void setCursos(Curso curso) {
-        this.curso = curso;
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

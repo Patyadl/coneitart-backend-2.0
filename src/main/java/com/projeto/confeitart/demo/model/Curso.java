@@ -1,5 +1,6 @@
 package com.projeto.confeitart.demo.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -9,32 +10,24 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_curso")
-public class Curso implements Serializable {
+public class Curso  implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private  String nome;
+    private String nome;
     private String descricao;
-    //private Plano plano;
-    private Professor professor;
 
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
+
     @ManyToMany(mappedBy = "cursos")
     private List<Aluno> alunos;
-
-   // @JsonIgnore
-    //@ManyToOne
-    //@JoinColumn(name = "aluno_id")
-    //private Aluno aluno;
-
-
-
-
+    //private Plano plano;
     //private List<Categoria> categorias;
-    //private List<Modulo>modulos;
-
-
+    //private List<Modulos> modulos;
 
     public Curso(){}
 
@@ -76,6 +69,7 @@ public class Curso implements Serializable {
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }
+
     public List<Aluno> getAlunos() {
         return alunos;
     }
@@ -83,6 +77,7 @@ public class Curso implements Serializable {
     public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

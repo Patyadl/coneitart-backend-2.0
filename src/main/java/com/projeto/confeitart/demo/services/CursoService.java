@@ -8,6 +8,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CursoService {
 
@@ -22,28 +26,30 @@ public class CursoService {
         this.alunoRepository = alunoRepository;
     }
 
-   // @Autowired
-    //private Aluno aluno;
+    public void matricula(Long cursoId, Aluno aluno) {
+        Optional<Curso> cursoOptional = cursoRepository.findByIdWithAlunos(cursoId);
 
+        if (cursoOptional.isPresent()) {
+            Curso curso = cursoOptional.get();
+            List<Aluno> alunos = curso.getAlunos();
 
-    public void matricula(Long cursoId, Long alunoid) {
-        Curso curso = cursoRepository.findById(cursoId)
-                .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado com ID: " + cursoId));
+            if (alunos == null) {
+                alunos = new ArrayList<>();
+            }
 
-        Aluno aluno= alunoRepository.findById(alunoid)
-                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + alunoid));
+            alunos.add(aluno);
+            curso.setAlunos(alunos);
 
-
-
-        curso.getAlunos().add(aluno);
-        //aluno.getCursos().add(curso);
-        alunoRepository.save(aluno);
-        cursoRepository.save(curso);
+            cursoRepository.save(curso);
+        } else {
+            throw new EntityNotFoundException("Curso com ID " + cursoId + " não encontrado.");
+        }
     }
 
 
-    public Curso adicionarCurso(Curso curso){
-     return cursoRepository.save(curso);
+
+    public void adicionarCurso(Curso curso){
+        cursoRepository.save(curso);
     }
 
 

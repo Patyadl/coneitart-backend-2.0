@@ -8,17 +8,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "tb_professor")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tb_professor", discriminatorType = DiscriminatorType.STRING)
 public class Professor extends Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String especializacao;
 
-    @OneToMany(mappedBy = "professor")
-    private List<Curso> cursos;
+    @OneToOne(mappedBy = "professor")
+    private Curso curso;
 
 
     @JsonIgnore
@@ -28,7 +25,7 @@ public class Professor extends Usuario implements Serializable {
 
     public Professor(){}
 
-    public Professor(Long id, String nome, String email, int senha,  String especializacao) {
+    public Professor(Long id, String nome, String email, int senha,  String especializacao ) {
         super(id, nome, email, senha);
         this.id = id;
         this.especializacao = especializacao;
@@ -40,6 +37,15 @@ public class Professor extends Usuario implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+        curso.setProfessor(this); // Certifique-se de configurar a relação bidirecional
     }
 
     public String getEspecializacao() {
