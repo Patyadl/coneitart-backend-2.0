@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +22,15 @@ public abstract class Usuario implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Aluno> alunos;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_curso",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private List<Curso> cursos = new ArrayList<>();
 
     public Usuario(){}
 

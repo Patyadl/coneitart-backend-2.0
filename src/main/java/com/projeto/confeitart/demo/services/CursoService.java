@@ -15,15 +15,13 @@ import java.util.Optional;
 @Service
 public class CursoService {
 
-    @Autowired
 
     private final CursoRepository cursoRepository;
-    private final AlunoRepository alunoRepository;
+
 
     @Autowired
     public CursoService(CursoRepository cursoRepository, AlunoRepository alunoRepository) {
         this.cursoRepository = cursoRepository;
-        this.alunoRepository = alunoRepository;
     }
 
     public void matricula(Long cursoId, Aluno aluno) {
@@ -51,6 +49,7 @@ public class CursoService {
     public void adicionarCurso(Curso curso){
         cursoRepository.save(curso);
     }
-
+ //public  void removerCurso(Curso curso){
+       // cursoRepository.delete(curso);}
 
 }

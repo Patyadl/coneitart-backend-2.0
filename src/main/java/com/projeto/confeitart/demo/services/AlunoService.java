@@ -2,12 +2,15 @@ package com.projeto.confeitart.demo.services;
 
 
 import com.projeto.confeitart.demo.model.Aluno;
+import com.projeto.confeitart.demo.model.Curso;
 import com.projeto.confeitart.demo.repositories.AlunoRepository;
 import com.projeto.confeitart.demo.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,10 +23,12 @@ public class AlunoService extends UsuarioService {
     @Autowired
     private CursoRepository cursoRepository;
 
+    private List<Curso> cursos = new ArrayList<>();
+
      public Aluno salvarAluno(Aluno aluno){
          return alunoRepository.save(aluno);
      }
-   public void deletarAluno(Long id){
+   public void deletarAluno(Long id ){
          alunoRepository.deleteById(id);}
 
    public void atualizarAluno(Long id , Aluno alunoAtualizado){
@@ -57,6 +62,7 @@ public class AlunoService extends UsuarioService {
              alunoRepository.save(aluno);
          }
      }
+
 
 
 }

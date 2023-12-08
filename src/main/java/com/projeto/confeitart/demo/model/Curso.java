@@ -25,17 +25,28 @@ public class Curso  implements Serializable {
 
     @ManyToMany(mappedBy = "cursos")
     private List<Aluno> alunos;
-    //private Plano plano;
-    //private List<Categoria> categorias;
-    //private List<Modulos> modulos;
+
+  @ManyToOne
+  @JoinColumn(name = "plano_id")
+    private Plano plano;
+
+  @ManyToOne
+  @JoinColumn(name = "categoria_id")
+  private Categoria categoria;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Modulo> modulos;
 
     public Curso(){}
 
-    public Curso(Long id, String nome, String descricao, Professor professor) {
+    public Curso(Long id, String nome, String descricao, Professor professor , Plano plano, Categoria categoria) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.professor = professor;
+        this.plano = plano;
+        this.categoria= categoria;
+
     }
 
     public Long getId() {
@@ -76,6 +87,22 @@ public class Curso  implements Serializable {
 
     public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
+    }
+
+    public Plano getPlano() {
+        return plano;
+    }
+
+    public void setPlano(Plano plano) {
+        this.plano = plano;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override

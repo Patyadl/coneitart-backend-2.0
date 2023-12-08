@@ -51,7 +51,6 @@ public class Aluno extends Usuario implements Serializable  {
     }
 
 
-
     @Override
     public Long getId() {
         return id;
