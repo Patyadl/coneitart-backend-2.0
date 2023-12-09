@@ -34,7 +34,7 @@ public class Curso  implements Serializable {
   @JoinColumn(name = "categoria_id")
   private Categoria categoria;
 
-    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "curso")
     private List<Modulo> modulos;
 
     public Curso(){}
@@ -103,6 +103,14 @@ public class Curso  implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public List<Modulo> getModulos() {
+        return modulos;
+    }
+
+    public void setModulos(List<Modulo> modulos) {
+        this.modulos = modulos;
     }
 
     @Override

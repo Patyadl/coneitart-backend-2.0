@@ -26,8 +26,8 @@ public class ModuloService {
         return moduloRepository.findByCurso(curso);
     }
 
-    public Modulo saveModulo(Modulo modulo) {
-        return moduloRepository.save(modulo);
+    public void saveModulo(Modulo modulo) {
+        moduloRepository.save(modulo);
     }
 
     public void deleteModulo(Long id) {

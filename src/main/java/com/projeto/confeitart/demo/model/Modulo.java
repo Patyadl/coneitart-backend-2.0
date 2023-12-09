@@ -3,11 +3,12 @@ package com.projeto.confeitart.demo.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_modulo")
-public class Modulo {
+public class Modulo  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,6 +17,7 @@ public class Modulo {
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
 
     public Modulo(){}
 
@@ -42,20 +44,20 @@ public class Modulo {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public Curso getCurso() {
         return curso;
     }
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @Override
