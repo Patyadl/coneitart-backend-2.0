@@ -2,6 +2,7 @@ package com.projeto.confeitart.demo.services;
 
 import com.projeto.confeitart.demo.model.Aluno;
 import com.projeto.confeitart.demo.model.Curso;
+import com.projeto.confeitart.demo.model.Usuario;
 import com.projeto.confeitart.demo.repositories.AlunoRepository;
 import com.projeto.confeitart.demo.repositories.CursoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,6 +25,8 @@ public class CursoService {
         this.cursoRepository = cursoRepository;
     }
 
+
+
     public void matricula(Long cursoId, Aluno aluno) {
         Optional<Curso> cursoOptional = cursoRepository.findByIdWithAlunos(cursoId);
 
@@ -44,12 +47,14 @@ public class CursoService {
         }
     }
 
-
+    public Curso getCursoById(Long id) {
+        return cursoRepository.findById(id).orElse(null);
+    }
 
     public void adicionarCurso(Curso curso){
         cursoRepository.save(curso);
     }
- //public  void removerCurso(Curso curso){
-       // cursoRepository.delete(curso);}
+ public  void removerCurso(Curso curso){
+       cursoRepository.delete(curso);}
 
 }

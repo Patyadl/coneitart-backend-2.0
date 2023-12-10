@@ -1,6 +1,5 @@
 package com.projeto.confeitart.demo.services;
 
-import com.projeto.confeitart.demo.model.Curso;
 import com.projeto.confeitart.demo.model.Modulo;
 import com.projeto.confeitart.demo.repositories.ModuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,6 @@ public class ModuloService {
 
     public Modulo getModuloById(Long id) {
         return moduloRepository.findById(id).orElse(null);
-    }
-
-    public List<Modulo> getModulosByCurso(Curso curso) {
-        return moduloRepository.findByCurso(curso);
     }
 
     public void saveModulo(Modulo modulo) {

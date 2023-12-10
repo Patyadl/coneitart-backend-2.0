@@ -23,7 +23,7 @@ public abstract class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario")
     private List<Aluno> alunos;
 
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "usuario_curso",
@@ -34,8 +34,8 @@ public abstract class Usuario implements Serializable {
 
     public Usuario(){}
 
-    public Usuario(Long id, String nome, String email, int senha) {
-        this.id = id;
+    public Usuario( String nome, String email, int senha) {
+
         this.nome = nome;
         this.email = email;
         this.senha = senha;

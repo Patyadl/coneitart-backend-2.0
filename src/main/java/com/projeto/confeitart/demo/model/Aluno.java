@@ -24,7 +24,7 @@ public class Aluno extends Usuario implements Serializable  {
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "aluno_curso",
             joinColumns = @JoinColumn(name = "aluno_id"),
@@ -38,8 +38,8 @@ public class Aluno extends Usuario implements Serializable  {
 
     }
 
-    public Aluno(Long id, String nome, String email, int senha, Long id_curso) {
-        super(id, nome, email, senha);
+    public Aluno( String nome, String email, int senha, Long id_curso) {
+        super( nome, email, senha);
 
         // Agora, o ID do curso deve ser atribuído ao curso diretamente, não ao ID do aluno
         this.cursos = new ArrayList<>();

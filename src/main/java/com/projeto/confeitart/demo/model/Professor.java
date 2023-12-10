@@ -14,6 +14,7 @@ public class Professor extends Usuario implements Serializable {
     private Long id;
     private String especializacao;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "professor")
     private Curso curso;
 
@@ -25,9 +26,9 @@ public class Professor extends Usuario implements Serializable {
 
     public Professor(){}
 
-    public Professor(Long id, String nome, String email, int senha,  String especializacao ) {
-        super(id, nome, email, senha);
-        this.id = id;
+    public Professor( String nome, String email, int senha,  String especializacao ) {
+        super( nome, email, senha);
+
         this.especializacao = especializacao;
     }
 

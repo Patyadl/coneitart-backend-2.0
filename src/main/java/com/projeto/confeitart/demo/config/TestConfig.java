@@ -40,15 +40,6 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Professor p1 = new Professor();
-        p1.setNome("Giovanna");
-        p1.setEmail("Giovanna@gmail.com");
-        p1.setSenha(2755);
-        p1.setEspecializacao("confeitaria clássica");
-
-
-        professorRepository.save(p1);
-
         Plano plano = new Plano();
         plano.setPlano(false);
         planoRepository.save(plano);
@@ -59,22 +50,30 @@ public class TestConfig implements CommandLineRunner {
         categoriaRepository.save(categoria);
 
         Modulo modulo = new Modulo();
-        modulo.setNome("Módulo 1");
-        modulo.setDescricao("Descrição do Módulo 1");
+        modulo.setNome("Módulo 2");
+        modulo.setDescricao("Descrição do Módulo 2");
         moduloService.saveModulo(modulo);
         moduloRepository.save(modulo);
+
+        Professor p1 = new Professor();
+        p1.setNome("Giovanna");
+        p1.setEmail("Giovanna@gmail.com");
+        p1.setSenha(2755);
+        p1.setEspecializacao("confeitaria clássica");
+
+
+        professorRepository.save(p1);
 
         Curso curso = new Curso();
         curso.setNome("Bolos cazeiros");
         curso.setDescricao("Curso sobre bolos cazeiros");
-        curso.setPlano(plano);
-        curso.setProfessor(p1);
-        curso.setCategoria(categoria);
-        modulo.setCurso(curso);
         cursoService.adicionarCurso(curso);
         cursoRepository.save(curso);
 
-
+        //associando categoria e modulo ao curso.
+        curso.getCategorias().add(categoria);
+        curso.getModulos().add(modulo);
+        cursoRepository.save(curso);
 
         Aluno aluno = new Aluno();
         aluno.setNome("Renan");

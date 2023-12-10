@@ -1,10 +1,12 @@
 package com.projeto.confeitart.demo.services;
 
+import com.projeto.confeitart.demo.model.Curso;
 import com.projeto.confeitart.demo.model.Professor;
 import com.projeto.confeitart.demo.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,7 +15,11 @@ public class ProfessorService extends UsuarioService{
     @Autowired
     private ProfessorRepository professorRepository;
 
-    public Professor salvarProfessor(Professor professor){
+    public List<Professor> listarProfessores() {
+        return professorRepository.findAll();
+    }
+    public Professor salvarProfessor(Professor professor , Curso curso){
+        professor.setCurso(curso);
         return professorRepository.save(professor);
     }
     public void deletarprofessor(Long id){
@@ -52,6 +58,10 @@ public class ProfessorService extends UsuarioService{
            professor.setSenha(novaSenha);
             professorRepository.save(professor);
         }
+    }
+
+    public Professor getProfessorById(Long id) {
+        return professorRepository.findById(id).orElse(null);
     }
     
 }

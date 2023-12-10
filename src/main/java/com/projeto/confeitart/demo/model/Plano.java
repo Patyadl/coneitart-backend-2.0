@@ -1,5 +1,6 @@
 package com.projeto.confeitart.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,15 +16,15 @@ public class Plano implements Serializable {
     private  Long id;
     private boolean plano;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "plano")
     private List<Curso> cursos;
 
 
     public Plano(){}
 
-    public Plano(Long id, boolean plano) {
-        this.id = id;
+    public Plano( boolean plano) {
+
         this.plano = plano;
     }
 

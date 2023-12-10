@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_curso")
@@ -23,30 +25,43 @@ public class Curso  implements Serializable {
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "cursos")
     private List<Aluno> alunos;
 
+    @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "plano_id")
+  @JoinTable(
+          name = "curso_plano",
+          joinColumns = @JoinColumn(name = "curso_id"),
+          inverseJoinColumns = @JoinColumn(name = "plano_id"))
     private Plano plano;
 
-  @ManyToOne
-  @JoinColumn(name = "categoria_id")
-  private Categoria categoria;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "curso_categoria",
+            joinColumns = @JoinColumn(name = "curso_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    private Set<Categoria> categorias = new HashSet<>();
 
-    @OneToMany(mappedBy = "curso")
-    private List<Modulo> modulos;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "curso_modulo",
+            joinColumns = @JoinColumn(name = "curso_id"),
+            inverseJoinColumns = @JoinColumn(name = "modulo_id"))
+    private Set<Modulo> modulos = new HashSet<>();
 
     public Curso(){}
 
-    public Curso(Long id, String nome, String descricao, Professor professor , Plano plano, Categoria categoria) {
-        this.id = id;
+    public Curso( String nome, String descricao, Professor professor , Plano plano) {
+
         this.nome = nome;
         this.descricao = descricao;
         this.professor = professor;
         this.plano = plano;
-        this.categoria= categoria;
-
     }
 
     public Long getId() {
@@ -97,19 +112,18 @@ public class Curso  implements Serializable {
         this.plano = plano;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Set<Categoria> getCategorias() {
+        return categorias;
+    }
+    public void setCategorias(Set<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public List<Modulo> getModulos() {
+    public Set<Modulo> getModulos() {
         return modulos;
     }
 
-    public void setModulos(List<Modulo> modulos) {
+    public void setModulos(Set<Modulo> modulos) {
         this.modulos = modulos;
     }
 

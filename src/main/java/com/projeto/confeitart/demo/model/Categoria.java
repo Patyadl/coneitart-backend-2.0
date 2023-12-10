@@ -1,10 +1,13 @@
 package com.projeto.confeitart.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_categoria")
@@ -15,15 +18,15 @@ public class Categoria implements Serializable {
     private Long id;
     private String nome;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Curso> cursos;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categorias")
+    private Set<Curso> cursos = new HashSet<>();
 
     public Categoria(){}
 
-    public Categoria(Long id, String nome, List<Curso> cursos) {
-        this.id = id;
+    public Categoria(String nome) {
+
         this.nome = nome;
-        this.cursos = cursos;
     }
 
     public Long getId() {
@@ -42,11 +45,7 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Curso> getCursos() {
-        return cursos;
-    }
-
-    public void setCursos(List<Curso> cursos) {
+    public void setCursos(Set<Curso> cursos) {
         this.cursos = cursos;
     }
 

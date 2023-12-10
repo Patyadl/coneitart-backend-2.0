@@ -1,10 +1,13 @@
 package com.projeto.confeitart.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_modulo")
@@ -14,18 +17,17 @@ public class Modulo  implements Serializable {
     private Long id;
     private String nome;
     private String descricao;
-    @ManyToOne
-    @JoinColumn(name = "curso_id")
-    private Curso curso;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "modulos")
+    private Set<Curso> cursos = new HashSet<>();
 
     public Modulo(){}
 
-    public Modulo(Long id, String nome,String descricao, Curso curso) {
-        this.id = id;
+    public Modulo(String nome,String descricao) {
+
         this.nome = nome;
         this.descricao= descricao;
-        this.curso = curso;
     }
 
     public Long getId() {
@@ -44,12 +46,8 @@ public class Modulo  implements Serializable {
         this.nome = nome;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursos(Set<Curso> cursos) {
+        this.cursos = cursos;
     }
 
     public String getDescricao() {
